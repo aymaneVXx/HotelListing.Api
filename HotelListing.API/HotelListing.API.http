@@ -1,0 +1,40 @@
+@HotelListing.API_HostAddress = http://localhost:5100
+
+###
+
+GET {{HotelListing.API_HostAddress}}/api/hotels
+
+###
+
+POST {{HotelListing.API_HostAddress}}/api/hotels
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "Grand Plaza",
+  "adress": "123 Main St",
+  "rating": 4.5
+}
+
+###
+
+@id=4
+DELETE {{HotelListing.API_HostAddress}}/api/hotels/{{id}}
+
+###
+
+GET {{HotelListing.API_HostAddress}}/api/hotels/{{id}}
+
+###
+
+PUT {{HotelListing.API_HostAddress}}/api/hotels/{{id}}
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "Test Hotel",
+  "adress": "123 Main St",
+  "rating": 4.5
+}
+
+###
