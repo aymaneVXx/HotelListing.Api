@@ -38,3 +38,37 @@ Content-Type: application/json
 }
 
 ###
+
+@id=2
+GET {{HotelListing.API_HostAddress}}/api/countries
+
+###
+
+POST {{HotelListing.API_HostAddress}}/api/countries
+Content-Type: application/json
+
+{
+  "Name" : "Test Country",
+  "ShortName" : "TC"
+}
+
+###
+
+DELETE {{HotelListing.API_HostAddress}}/api/countries/{{id}}
+
+###
+
+GET {{HotelListing.API_HostAddress}}/api/countries/{{id}}
+
+###
+
+PUT {{HotelListing.API_HostAddress}}/api/countries/{{id}}
+Content-Type: application/json
+
+{ 
+  "CountryId": 2,
+  "Name" : "Jamaica",
+  "ShortName" : "JM"
+}
+
+###

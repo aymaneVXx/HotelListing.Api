@@ -9,8 +9,8 @@ namespace HotelListing.API.Data
             
         }
 
-        DbSet<Country> Countries { get; set; }
-        DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
     }   
 
 }
