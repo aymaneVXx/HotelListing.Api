@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using HotelListing.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HotelListing.API.Data;
 
 namespace HotelListing.API.Controllers;
 
@@ -26,7 +21,7 @@ public class CountriesController(HotelListingDbContext context) : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Country>> GetCountry(int id)
     {
-        var country = await context.Countries.FindAsync(id);
+        var country = await context.Countries.Include(h => h.Hotels).FirstOrDefaultAsync(e => e.CountryId == id);
 
         if (country == null)
         {

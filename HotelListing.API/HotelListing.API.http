@@ -1,45 +1,9 @@
 @HotelListing.API_HostAddress = http://localhost:5100
 
-###
-
-GET {{HotelListing.API_HostAddress}}/api/hotels
 
 ###
 
-POST {{HotelListing.API_HostAddress}}/api/hotels
-Content-Type: application/json
-
-{
-  "id": 4,
-  "name": "Grand Plaza",
-  "adress": "123 Main St",
-  "rating": 4.5
-}
-
-###
-
-@id=4
-DELETE {{HotelListing.API_HostAddress}}/api/hotels/{{id}}
-
-###
-
-GET {{HotelListing.API_HostAddress}}/api/hotels/{{id}}
-
-###
-
-PUT {{HotelListing.API_HostAddress}}/api/hotels/{{id}}
-Content-Type: application/json
-
-{
-  "id": 4,
-  "name": "Test Hotel",
-  "adress": "123 Main St",
-  "rating": 4.5
-}
-
-###
-
-@id=2
+@countryId=3
 GET {{HotelListing.API_HostAddress}}/api/countries
 
 ###
@@ -54,21 +18,58 @@ Content-Type: application/json
 
 ###
 
-DELETE {{HotelListing.API_HostAddress}}/api/countries/{{id}}
+DELETE {{HotelListing.API_HostAddress}}/api/countries/{{countryId}}
 
 ###
 
-GET {{HotelListing.API_HostAddress}}/api/countries/{{id}}
+GET {{HotelListing.API_HostAddress}}/api/countries/{{countryId}}
 
 ###
 
-PUT {{HotelListing.API_HostAddress}}/api/countries/{{id}}
+PUT {{HotelListing.API_HostAddress}}/api/countries/{{countryId}}
 Content-Type: application/json
 
 { 
-  "CountryId": 2,
+  "CountryId": 3,
   "Name" : "Jamaica",
   "ShortName" : "JM"
 }
+
+###
+@hotelId=5
+GET {{HotelListing.API_HostAddress}}/api/hotels
+
+###
+
+POST {{HotelListing.API_HostAddress}}/api/hotels
+Content-Type: application/json
+
+{
+  "Name" : "Test Hotel",
+  "Adress" : "123 Main St",
+  "Rating" : 4.5,
+  "CountryId" : 3
+}
+
+###
+DELETE {{HotelListing.API_HostAddress}}/api/hotels/{{hotelId}}
+
+###
+
+GET {{HotelListing.API_HostAddress}}/api/hotels/{{hotelId}}
+
+###
+
+PUT {{HotelListing.API_HostAddress}}/api/hotels/{{hotelId}}
+Content-Type: application/json
+
+{
+  "Id" : 1,
+  "Name" : "Ocean Hotel",
+  "Adress" : "Errachidia, Morocco",
+  "Rating" : 4,
+  "CountryId" : 1
+}
+
 
 ###
