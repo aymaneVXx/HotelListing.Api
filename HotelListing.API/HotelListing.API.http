@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ###
-@hotelId=5
+@hotelId=3
 GET {{HotelListing.API_HostAddress}}/api/hotels
 
 ###
@@ -44,9 +44,10 @@ GET {{HotelListing.API_HostAddress}}/api/hotels
 POST {{HotelListing.API_HostAddress}}/api/hotels
 Content-Type: application/json
 
-{
-  "Name" : "Test Hotel",
-  "Adress" : "123 Main St",
+{ 
+  "Id" : 3,
+  "Name" : "Moon Palace",
+  "Adress" : "Ocho Rios, Jamaica",
   "Rating" : 4.5,
   "CountryId" : 3
 }
@@ -64,7 +65,7 @@ PUT {{HotelListing.API_HostAddress}}/api/hotels/{{hotelId}}
 Content-Type: application/json
 
 {
-  "Id" : 1,
+  "Id" : 3,
   "Name" : "Ocean Hotel",
   "Adress" : "Errachidia, Morocco",
   "Rating" : 4,

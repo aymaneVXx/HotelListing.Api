@@ -1,4 +1,5 @@
 ﻿using HotelListing.API.Data;
+using HotelListing.API.DTOs.Hotel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,16 +12,21 @@ public class HotelsController(HotelListingDbContext context) : ControllerBase
 
     // GET: api/Hotels
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+    public async Task<ActionResult<IEnumerable<GetHotelsDto>>> GetHotels()
     {
-        return await context.Hotels.ToListAsync();
+        var hotels = await context.Hotels
+            .Select(h => new GetHotelsDto (h.Id, h.Name, h.Adress, h.Rating, h.CountryId )).ToListAsync();
+        return Ok(hotels);
     }
 
     // GET: api/Hotels/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Hotel>> GetHotel(int id)
+    public async Task<ActionResult<GetHotelDto>> GetHotel(int id)
     {
-        var hotel = await context.Hotels.Include(h => h.Country).FirstOrDefaultAsync(e => e.Id == id);
+        var hotel = await context.Hotels
+            .Where(h  => h.Id == id)
+            .Select(h => new GetHotelDto(h.Id, h.Name, h.Adress, h.Rating, h.Country!.Name))
+            .FirstOrDefaultAsync();
 
         if (hotel == null)
         {
@@ -33,14 +39,23 @@ public class HotelsController(HotelListingDbContext context) : ControllerBase
     // PUT: api/Hotels/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+    public async Task<IActionResult> PutHotel(int id, UpdateHotelDto hotelDto)
     {
-        if (id != hotel.Id)
+        if (id != hotelDto.Id)
         {
             return BadRequest();
         }
 
-        context.Entry(hotel).State = EntityState.Modified;
+        var hotel = await context.Hotels.FindAsync(id);
+        if (hotel == null)
+        {
+            return NotFound();
+        }
+
+        hotel.Name = hotelDto.Name;
+        hotel.Adress = hotelDto.Adress;
+        hotel.Rating = hotelDto.Rating;
+        hotel.CountryId = hotelDto.CountryId;
 
         try
         {
@@ -64,8 +79,16 @@ public class HotelsController(HotelListingDbContext context) : ControllerBase
     // POST: api/Hotels
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+    public async Task<ActionResult<Hotel>> PostHotel(CreateHotelDto hotelDto)
     {
+        var hotel = new Hotel
+        {
+            Name = hotelDto.Name,
+            Adress = hotelDto.Adress,
+            Rating = hotelDto.Rating,
+            CountryId = hotelDto.CountryId,
+        };
+
         context.Hotels.Add(hotel);
         await context.SaveChangesAsync();
 
